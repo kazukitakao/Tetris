@@ -15,6 +15,24 @@ using System.Windows.Shapes;
 
 namespace Tetris
 {
+
+    public class Board
+    {
+        private int Rows;
+        private int Cols;
+        private int Score;
+        private int LinesFilled;
+        private Tetramino currentTetrimino;
+        private Label[,] BlockControls;
+
+        public Board(Grid TetrisGrid)
+        {
+            Rows = TetrisGrid.RowDefinitions.Count;
+            Cols = TetrisGrid.ColumnDefinitions.Count;
+            Score = 0;
+            LinesFilled = 0;
+        }
+    }
     public class Tetramino
     {
         private Point currentPosition;
@@ -45,6 +63,34 @@ namespace Tetris
             return currentShape;
         }
 
+        public void moveLeft()
+        {
+            currentPosition.X -= 1;
+        }
+
+        public void moveRight()
+        {
+            currentPosition.X += 1;
+        }
+
+        public void moveDown()
+        {
+            currentPosition.Y += 1;
+        }
+
+        public void movRotate()
+        {
+            if (rotate)
+            {
+                for (int i = 0; i < currentShape.Length; i++)
+                {
+                    double x = currentShape[i].X;
+                    currentShape[i].X = currentShape[i].Y * -1;
+                    currentShape[i].Y = x;
+                }
+            }
+        }
+
         private Point[] setRandomShape()
         {
             Random rand = new Random();
@@ -66,7 +112,7 @@ namespace Tetris
                     return new Point[]
                     {
                         new Point(1,-1),
-                        new Point(=1,0),
+                        new Point(1,0),
                         new Point(0,0),
                         new Point(0,0)
                     };
@@ -81,7 +127,7 @@ namespace Tetris
                         new Point(1,-1)
                     };
                 case 3:// O
-                    rotate = true;
+                    rotate = false;
                     currentColor = Brushes.Yellow;
                     return new Point[]
                     {
