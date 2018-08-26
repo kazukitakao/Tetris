@@ -120,6 +120,7 @@ namespace Tetris
         }
 
         // TODO:処理が冗長なのでコンパクトにできないか検討
+        // TODO:Move系全般に枠外に出ると範囲外でエラー
         public void CurrentTetriminoMoveRight()
         {
             Point position = currentTetrimino.getCurrentPosition();
@@ -181,6 +182,7 @@ namespace Tetris
             Point position = currentTetrimino.getCurrentPosition();
             Point[] Shape = currentTetrimino.GetCurrentShape();
             bool move = true;
+            currentTetriminoErase();
             foreach (Point s in Shape)
             {
                 if ((int)(s.Y + position.Y +2 + 1) >= Rows)
@@ -313,7 +315,7 @@ namespace Tetris
             {
                 case 0: // I
                     rotate = true;
-                    currentColor = Brushes.Cyan;
+                    currentColor = Brushes.LightBlue;
                     return new Point[] 
                     {
                         new Point(0,0),
@@ -321,14 +323,14 @@ namespace Tetris
                         new Point(1,0),
                         new Point(2,0)
                     };
-                case 1:// J
+                case 1:// J 
                     rotate = true;
                     currentColor = Brushes.Blue;
                     return new Point[]
                     {
                         new Point(1,-1),
                         new Point(1,0),
-                        new Point(0,0),
+                        new Point(1,1),
                         new Point(0,0)
                     };
                 case 2:// L
@@ -353,7 +355,7 @@ namespace Tetris
                     };
                 case 4:// S
                     rotate = true;
-                    currentColor = Brushes.Green;
+                    currentColor = Brushes.YellowGreen;
                     return new Point[]
                     {
                         new Point(0,0),
@@ -369,7 +371,7 @@ namespace Tetris
                         new Point(0,0),
                         new Point(-1,0),
                         new Point(0,-1),
-                        new Point(1,1)
+                        new Point(0,1)
                     };
                 case 6:// Z
                     rotate = true;
