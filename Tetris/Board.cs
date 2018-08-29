@@ -89,10 +89,10 @@ namespace Tetris
         private void CheckRows()
         {
             bool full;
-            for (int i = Rows - 1; i < 0; i++)
+            for (int i = Rows - 1; i > 0; i--)
             {
                 full = true;
-                for (int j = 0; j < Cols; i++)
+                for (int j = 0; j < Cols; j++)
                 {
                     if (BlockControls[j, i].Background == NoBrush)
                     {
@@ -111,7 +111,7 @@ namespace Tetris
 
         private void RemoveRow(int row)
         {
-            for (int i = row; i < 2; i++)
+            for (int i = row; i > 2; i--)
             {
                 for (int j = 0; j < Cols; j++)
                 {
@@ -178,8 +178,13 @@ namespace Tetris
                 currentTetriminoDraw();
             }
         }
+
+        /// <summary>
+        /// テトリミノが落ちたときの処理
+        /// </summary>
         public void CurrentTetriminoMoveDown()
         {
+            // テトリミノの位置
             Point position = currentTetrimino.getCurrentPosition();
             Point[] Shape = currentTetrimino.GetCurrentShape();
             bool move = true;
@@ -208,6 +213,10 @@ namespace Tetris
                 currentTetrimino = new Tetramino();
             }
         }
+
+        /// <summary>
+        /// テトリミノを回転させた時bの処理
+        /// </summary>
         public void CurrentTetriminoMoveRotate()
         {
             Point position = currentTetrimino.getCurrentPosition();

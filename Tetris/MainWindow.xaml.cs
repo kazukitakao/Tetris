@@ -20,9 +20,12 @@ namespace Tetris
             InitializeComponent();
         }
 
+
         void MainWindowInitilized(object sender,EventArgs e)
         {
             Timer = new DispatcherTimer();
+
+            // タイマーが経過するとイベントが発生するように設定
             Timer.Tick += new EventHandler(GameTick);
             Timer.Interval = new TimeSpan(0,0,0,0,400);
             GameStart();
@@ -35,6 +38,11 @@ namespace Tetris
             Timer.Start();
         }
 
+        /// <summary>
+        /// タイマーが進んだ時に発生するイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void GameTick(object sender,EventArgs e)
         {
             Score.Content = myBoard.GetScore().ToString("0000000000");
