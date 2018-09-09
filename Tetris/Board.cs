@@ -15,11 +15,18 @@ namespace Tetris
         private int Cols;
         private int Score;
         private int LinesFilled;
-        private Tetramino currentTetrimino;
+        private Tetramino _currentTetrimino;
         private Label[,] BlockControls;
 
         static private Brush NoBrush = Brushes.Transparent;
         static private Brush SilverBrush = Brushes.Gray;
+
+        /// <summary>
+        /// 現在のテトリミノの位置
+        /// </summary>
+        public Point CurrentPoint {
+            get{ return _currentTetrimino.getCurrentPosition();}
+        }
 
         public Board(Grid TetrisGrid)
         {
@@ -45,7 +52,7 @@ namespace Tetris
                     TetrisGrid.Children.Add(BlockControls[i, j]);
                 }
             }
-            currentTetrimino = new Tetramino();
+            _currentTetrimino = new Tetramino();
             currentTetriminoDraw();
         }
 
@@ -62,9 +69,9 @@ namespace Tetris
 
         private void currentTetriminoDraw()
         {
-            Point position = currentTetrimino.getCurrentPosition();
-            Point[] Shape = currentTetrimino.GetCurrentShape();
-            Brush Color = currentTetrimino.GetCurrentColor();
+            Point position = _currentTetrimino.getCurrentPosition();
+            Point[] Shape = _currentTetrimino.GetCurrentShape();
+            Brush Color = _currentTetrimino.GetCurrentColor();
 
             foreach (Point s in Shape)
             {
@@ -75,9 +82,9 @@ namespace Tetris
 
         private void currentTetriminoErase()
         {
-            Point position = currentTetrimino.getCurrentPosition();
-            Point[] Shape = currentTetrimino.GetCurrentShape();
-            Brush Color = currentTetrimino.GetCurrentColor();
+            Point position = _currentTetrimino.getCurrentPosition();
+            Point[] Shape = _currentTetrimino.GetCurrentShape();
+            Brush Color = _currentTetrimino.GetCurrentColor();
 
             foreach (Point s in Shape)
             {
@@ -122,14 +129,18 @@ namespace Tetris
 
         // TODO:処理が冗長なのでコンパクトにできないか検討
         // TODO:Move系全般に枠外に出ると範囲外でエラー
+        /// <summary>
+        /// テトリミノを右に移動させたときの処理
+        /// </summary>
         public void CurrentTetriminoMoveRight()
         {
-            Point position = currentTetrimino.getCurrentPosition();
-            Point[] Shape = currentTetrimino.GetCurrentShape();
+            Point position = _currentTetrimino.getCurrentPosition();
+            Point[] Shape = _currentTetrimino.GetCurrentShape();
             bool move = true;
             currentTetriminoErase();
             foreach (Point s in Shape)
             {
+
                 if ((int)(s.X + position.X) + (((Cols / 2) - 1) - 1) >= Cols)
                 {
                     move = false;
@@ -142,7 +153,7 @@ namespace Tetris
             }
             if (move)
             {
-                currentTetrimino.moveRight();
+                _currentTetrimino.moveRight();
                 currentTetriminoDraw();
             }
             else
@@ -150,10 +161,14 @@ namespace Tetris
                 currentTetriminoDraw();
             }
         }
+
+        /// <summary>
+        /// テトリミノを左に移動させてたときの処理
+        /// </summary>
         public void CurrentTetriminoMoveLeft()
         {
-            Point position = currentTetrimino.getCurrentPosition();
-            Point[] Shape = currentTetrimino.GetCurrentShape();
+            Point position = _currentTetrimino.getCurrentPosition();
+            Point[] Shape = _currentTetrimino.GetCurrentShape();
             bool move = true;
             currentTetriminoErase();
             foreach (Point s in Shape)
@@ -170,7 +185,7 @@ namespace Tetris
             }
             if (move)
             {
-                currentTetrimino.moveLeft();
+                _currentTetrimino.moveLeft();
                 currentTetriminoDraw();
             }
             else
@@ -185,8 +200,8 @@ namespace Tetris
         public void CurrentTetriminoMoveDown()
         {
             // テトリミノの位置
-            Point position = currentTetrimino.getCurrentPosition();
-            Point[] Shape = currentTetrimino.GetCurrentShape();
+            Point position = _currentTetrimino.getCurrentPosition();
+            Point[] Shape = _currentTetrimino.GetCurrentShape();
             bool move = true;
             currentTetriminoErase();
             foreach (Point s in Shape)
@@ -203,14 +218,14 @@ namespace Tetris
             }
             if (move)
             {
-                currentTetrimino.moveDown();
+                _currentTetrimino.moveDown();
                 currentTetriminoDraw();
             }
             else
             {
                 currentTetriminoDraw();
                 CheckRows();
-                currentTetrimino = new Tetramino();
+                _currentTetrimino = new Tetramino();
             }
         }
 
@@ -219,9 +234,9 @@ namespace Tetris
         /// </summary>
         public void CurrentTetriminoMoveRotate()
         {
-            Point position = currentTetrimino.getCurrentPosition();
+            Point position = _currentTetrimino.getCurrentPosition();
             Point[] s = new Point[4];
-            Point[] Shape = currentTetrimino.GetCurrentShape();
+            Point[] Shape = _currentTetrimino.GetCurrentShape();
             bool move = true;
             Shape.CopyTo(s, 0);
             currentTetriminoErase();
@@ -250,7 +265,7 @@ namespace Tetris
             }
             if (move)
             {
-                currentTetrimino.movRotate();
+                _currentTetrimino.movRotate();
                 currentTetriminoDraw();
             }
             else

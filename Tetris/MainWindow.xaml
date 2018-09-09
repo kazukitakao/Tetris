@@ -11,6 +11,8 @@
         <StackPanel DockPanel.Dock ="Right" Width="172">
             <Label Content="Label" Height="56" Name="Score" FontSize="28" FontWeight="Bold"/>
             <Label Content="Label" Height="56" Name="Lines" FontSize="28" FontWeight="Bold"/>
+            <Label Content="X:" Height="56" Name="DebugX" FontSize="28" FontWeight="Bold"/>
+            <Label Content="Y:" Height="56" Name="DebugY" FontSize="28" FontWeight="Bold"/>
         </StackPanel>
     <Grid Name="MainGrid" Height="500" Width="250">
         <Grid.RowDefinitions>

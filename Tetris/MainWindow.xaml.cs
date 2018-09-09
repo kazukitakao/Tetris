@@ -47,6 +47,11 @@ namespace Tetris
         {
             Score.Content = myBoard.GetScore().ToString("0000000000");
             Lines.Content = myBoard.Getlines().ToString("0000000000");
+            // TODO:テトリミノの位置をリアルタイムに出力する機能
+            // myBoard内で現在位置を取得する関数を設定し、値だけここに返す
+            Point p = myBoard.CurrentPoint;
+            DebugX.Content = "X: " + p.X;
+            DebugY.Content = "Y: " + p.Y;
             myBoard.CurrentTetriminoMoveDown();
         }
 
