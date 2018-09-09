@@ -19,7 +19,7 @@ namespace Tetris
         {
             currentPosition = new Point(0, 0);
             currentColor = Brushes.Transparent;
-            currentShape = setRandomShape();
+            currentShape = SetRandomShape();
         }
 
         // TODO:プロパティに置き換え
@@ -28,7 +28,7 @@ namespace Tetris
             return currentColor;
         }
 
-        public Point getCurrentPosition()
+        public Point GetCurrentPosition()
         {
             return currentPosition;
         }
@@ -38,22 +38,22 @@ namespace Tetris
             return currentShape;
         }
 
-        public void moveLeft()
+        public void MoveLeft()
         {
             currentPosition.X -= 1;
         }
 
-        public void moveRight()
+        public void MoveRight()
         {
             currentPosition.X += 1;
         }
 
-        public void moveDown()
+        public void MoveDown()
         {
             currentPosition.Y += 1;
         }
 
-        public void movRotate()
+        public void MovRotate()
         {
             if (rotate)
             {
@@ -66,7 +66,7 @@ namespace Tetris
             }
         }
 
-        private Point[] setRandomShape()
+        private Point[] SetRandomShape()
         {
             Random rand = new Random();
             switch (rand.Next() % 7)
