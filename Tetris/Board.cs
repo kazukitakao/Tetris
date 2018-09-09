@@ -163,19 +163,16 @@ namespace Tetris
             CurrentTetriminoErase();
             foreach (Point Shape in Shapes)
             {
-                // 移動場所が盤面の範囲を超えたら即false
-                // 値を判定しないと配列要素のインデックスを超えるためエラーになる
-                // xの横の範囲が超えたらそのまま描写する
-                
-                // テトリミノの形と形成している座標と現在の座標
-                if ((int)(Shape.X + position.X) + (((Cols / 2) - 1)) >= Cols - 1)
+                if ((int)(Shape.X + position.X) + (((Cols / 2) - 1) + 1) >= Cols)
                 {
                     move = false;
+                    break;
                 }
-                else  if (BlockControls[((int)(Shape.X + position.X) + ((Cols / 2) - 1) - 1),
+                else  if (BlockControls[(int)(Shape.X + position.X) + ((Cols / 2) - 1 + 1),
                     (int)(Shape.Y + position.Y) + 2].Background != NoBrush)
                 {
                     move = false;
+                    break;
                 }
             }
 
@@ -196,19 +193,21 @@ namespace Tetris
         public void CurrentTetriminoMoveLeft()
         {
             Point position = _currentTetrimino.GetCurrentPosition();
-            Point[] Shape = _currentTetrimino.GetCurrentShape();
+            Point[] Shapes = _currentTetrimino.GetCurrentShape();
             bool move = true;
             CurrentTetriminoErase();
-            foreach (Point s in Shape)
+            foreach (Point Shape in Shapes)
             {
-                if ((int)(s.X + position.X) + (((Cols / 2) - 1) - 1) < 0)
+                if ((int)(Shape.X + position.X) + (((Cols / 2) - 1) - 1) < 0)
                 {
                     move = false;
+                    break;
                 }
-                else if (BlockControls[((int)(s.X + position.X) + ((Cols / 2) - 1) - 1),
-                    (int)(s.Y + position.Y) + 2].Background != NoBrush)
+                else if (BlockControls[((int)(Shape.X + position.X) + ((Cols / 2) - 1) - 1),
+                    (int)(Shape.Y + position.Y) + 2].Background != NoBrush)
                 {
                     move = false;
+                    break;
                 }
             }
 
